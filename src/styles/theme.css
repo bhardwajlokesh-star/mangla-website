@@ -1,0 +1,112 @@
+/* ──────────────────────────────────────────────────────────────
+   MANGLA HEALTHCARE — UNIFIED THEME TOKENS
+   Single source of truth for colour, typography & spacing.
+   Replaces the legacy palette drift across the older pages.
+
+   Old palette  (HomePage/About/Services/Contact/HealthTest):
+     teal #0d7f78, teal2 #0a6560, navy #07202f
+   New palette  (Navbar/Footer/FloatingSocials/RichPage):
+     teal #0a6e66, teal2 #085a53, navy #0f1e2c, gold #c8a96e
+
+   The new palette wins. These tokens map the old hex codes to
+   the new ones so existing inline styles keep working without
+   a global find-replace.
+   ────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Primary palette ── */
+  --mh-teal:        #0a6e66;
+  --mh-teal-dark:   #085a53;
+  --mh-teal-deep:   #063f3a;
+  --mh-teal-light:  #e6f4f2;
+  --mh-teal-tint:   #f0fbf9;
+
+  --mh-gold:        #c8a96e;
+  --mh-gold-dark:   #a8884a;
+  --mh-gold-light:  #f7efde;
+  --mh-gold-tint:   #fdf6e9;
+
+  --mh-navy:        #0f1e2c;
+  --mh-navy-dark:   #07202f;
+  --mh-navy-mid:    #0a3545;
+
+  --mh-rust:        #B84C2B;
+  --mh-rust-dark:   #9a3e22;
+  --mh-rust-light:  #FAECE7;
+
+  --mh-cream:       #f7f3ed;
+
+  /* ── Neutrals ── */
+  --mh-ink:         #0f1e2c;
+  --mh-text:        #475569;
+  --mh-text-soft:   #64748b;
+  --mh-muted:       #94a3b8;
+  --mh-border:      #eef2f5;
+  --mh-border-strong:#e2e8f0;
+  --mh-bg:          #ffffff;
+  --mh-bg-soft:     #f8fafc;
+  --mh-bg-warm:     #fcfaf5;
+
+  /* ── Legacy aliases (so old #0d7f78/#07202f code keeps reading the same brand colours) ── */
+  --teal:           var(--mh-teal);
+  --teal2:          var(--mh-teal-dark);
+  --gold:           var(--mh-gold);
+  --navy:           var(--mh-navy-dark);
+  --cream:          var(--mh-cream);
+  --rust:           var(--mh-rust);
+
+  /* ── Typography ── */
+  --mh-font-sans:   'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mh-font-serif:  'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  --mh-font-mono:   'Space Grotesk', 'DM Mono', monospace;
+
+  /* ── Elevation ── */
+  --mh-shadow-sm:   0 4px 12px -4px rgba(15, 30, 44, 0.08);
+  --mh-shadow:      0 12px 28px -10px rgba(15, 30, 44, 0.16);
+  --mh-shadow-lg:   0 24px 56px -20px rgba(15, 30, 44, 0.22);
+  --mh-shadow-glow: 0 12px 32px -12px rgba(10, 110, 102, 0.45);
+
+  /* ── Radius ── */
+  --mh-radius-sm:   8px;
+  --mh-radius:      14px;
+  --mh-radius-lg:   22px;
+  --mh-radius-pill: 100px;
+
+  /* ── Motion ── */
+  --mh-ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --mh-fast:        0.18s var(--mh-ease);
+  --mh-slow:        0.32s var(--mh-ease);
+}
+
+/* ── Respect user motion preference ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Focus-visible: better keyboard accessibility ── */
+*:focus-visible {
+  outline: 2px solid var(--mh-teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Skip-to-content (a11y) ── */
+.skip-to-content {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 9999;
+  background: var(--mh-navy);
+  color: var(--mh-gold);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-to-content:focus { top: 16px; }

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a6e66" />
+
+    <!-- Primary meta — react-helmet overrides these per-page -->
+    <title>Mangla Healthcare — Ayurveda Hospital, Panchkarma & Diagnostics in Jaipur</title>
+    <meta name="description" content="NABH-aligned Ayurveda hospital with Panchkarma, pain management, diagnostics, and modern OPD care. Serving Jaipur and Rajasthan since 2005." />
+    <meta name="author" content="Mangla Healthcare" />
+    <meta name="keywords" content="Ayurveda hospital Jaipur, Panchkarma, Nirogpeeth Ayurveda, Mangla Nursing Home, ayurvedic doctor Jaipur, pain management, garbh sanskar, suvarnaprashan" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Mangla Healthcare — Ayurveda Hospital, Panchkarma & Diagnostics" />
+    <meta property="og:description" content="Integrated Ayurveda, modern diagnostics, and compassionate hospital care. Book a consultation with NABH-aligned doctors in Jaipur." />
+    <meta property="og:url" content="https://www.manglahealthcare.com/" />
+    <meta property="og:image" content="https://www.manglahealthcare.com/og-default.jpg" />
+    <meta property="og:site_name" content="Mangla Healthcare" />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mangla Healthcare — Ayurveda Hospital" />
+    <meta name="twitter:description" content="Integrated Ayurveda, modern diagnostics & hospital care in Jaipur." />
+    <meta name="twitter:image" content="https://www.manglahealthcare.com/og-default.jpg" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Preconnect to common origins for faster fonts/images -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <!-- Canonical (Helmet overrides per-page) -->
+    <link rel="canonical" href="https://www.manglahealthcare.com/" />
+
+    <!-- JSON-LD: MedicalOrganization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "MedicalOrganization",
+      "name": "Mangla Healthcare",
+      "alternateName": "Mangla Nursing Home & Nirogpeeth Ayurveda",
+      "url": "https://www.manglahealthcare.com",
+      "logo": "https://www.manglahealthcare.com/logo.png",
+      "telephone": "+91-98765-43210",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Medical Square",
+        "addressLocality": "Jaipur",
+        "addressRegion": "Rajasthan",
+        "postalCode": "302001",
+        "addressCountry": "IN"
+      },
+      "openingHoursSpecification": [{
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "09:00",
+        "closes": "20:00"
+      }],
+      "medicalSpecialty": ["Ayurveda","Panchkarma","Pain Management","Diagnostics","General Medicine"]
+    }
+    </script>
+
+    <!-- Google Analytics 4 (consent-gated — see CookieConsent.jsx) -->
+    <!-- Replace G-XXXXXXXXXX with your real GA4 measurement ID -->
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      // Default consent mode — denied until user accepts in the banner
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+        wait_for_update: 500
+      });
+      gtag('config', 'G-XXXXXXXXXX', { send_page_view: false });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

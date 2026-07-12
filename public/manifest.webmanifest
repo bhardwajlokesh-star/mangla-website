@@ -1,0 +1,12 @@
+{
+  "name": "Mangla Healthcare",
+  "short_name": "Mangla",
+  "description": "Ayurveda Hospital, Panchkarma & Diagnostics in Jaipur",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a6e66",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
