@@ -1,6 +1,5 @@
-import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Award, Leaf, Stethoscope, HeartPulse, Star } from 'lucide-react';
+import { Award, Leaf, Stethoscope, HeartPulse, Star } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────────────────
    ACCREDITATION STRIP — trust badges for HomePage / About

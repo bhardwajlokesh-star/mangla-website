@@ -1,10 +1,10 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PortalLayout from './PortalLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Search, Filter, MoreVertical, Eye, Download, Trash2,
-  Calendar, Phone, ChevronUp, ChevronDown, X, Plus,
-  CheckCircle, Clock, Loader2, ArrowUpRight, Users
+  Search, MoreVertical, Eye, Download, Trash2, Calendar, Phone,
+  ChevronUp, ChevronDown, X, Plus, CheckCircle, Clock, Loader2,
+  ArrowUpRight, Users
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

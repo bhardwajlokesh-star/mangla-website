@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import SEO, { breadcrumbSchema } from '../components/SEO';
+import SEO from '../components/SEO';
+import { breadcrumbSchema } from '../components/seoSchemas';
 import {
   ChevronRight, ChevronDown, Phone, ArrowRight, Sparkles,
   CheckCircle2, ShieldCheck, Clock, Users, Award,

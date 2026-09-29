@@ -1,13 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
-  Phone, Mail, MapPin, Clock, ChevronDown, ChevronRight,
-  Leaf, Heart, HeartPulse, Brain, Bone, Wind, Droplet, Flame,
-  Activity, Sparkles, Sun, Apple, Baby, Eye, Scissors,
-  ShieldCheck, Stethoscope, ClipboardCheck, FlaskConical,
-  Check, ArrowRight, Quote, Calendar, Send, Star, Award, Users,
-  UserCheck,
+  Phone, Mail, MapPin, Clock, ChevronDown, Leaf, Heart, HeartPulse,
+  Brain, Bone, Wind, Droplet, Activity, Sparkles, Sun, Apple, Baby,
+  ShieldCheck, Stethoscope, ClipboardCheck, FlaskConical, Check,
+  ArrowRight, Quote, Calendar, Send, Star, Award, UserCheck
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -349,24 +347,24 @@ const FAQS = [
 ];
 
 const SPECIALITY_IMAGES = {
-  'Orthopedic Disorders': '/img/super/Orthopedic Disorders.png',
-  'Neurological Disorders': '/img/super/Neurological Disorders.png',
-  'Skin Disorders': '/img/super/Skin Disorders.png',
-  'Gastrointestinal Disorders': '/img/super/Gastrointestinal Disorders.png',
-  'Respiratory Disorders': '/img/super/Respiratory Disorders.png',
-  'Kidney Disorders': '/img/super/Kidney Disorders.png',
-  'Liver Disorders': '/img/super/Liver Disorders.png',
-  'Diabetes Management': '/img/super/Diabetes Management.png',
-  'Thyroid Disorders': '/img/super/Thyroid Disorders.png',
-  'Obesity Management': '/img/super/Obesity Management.png',
-  'Gynecological Disorders': '/img/super/Gynecological Disorders.png',
-  'Infertility Management': '/img/super/Infertility Management.png',
-  'Pediatric Care': '/img/super/Pediatric Care.png',
-  'Cardiac Care': '/img/super/Cardiac Care.png',
-  'Mental Health & Stress Disorders': '/img/super/Mental Health & Stress Disorders.png',
-  'Joint & Arthritis Care': '/img/super/Joint & Arthritis Care.png',
-  'Spine & Back Pain Disorders': '/img/super/Spine & Back Pain Disorders.png',
-  'Hair & Scalp Disorders': '/img/super/Hair & Scalp Disorders.png',
+  'Orthopedic Disorders': '/img/super/Orthopedic Disorders.webp',
+  'Neurological Disorders': '/img/super/Neurological Disorders.webp',
+  'Skin Disorders': '/img/super/Skin Disorders.webp',
+  'Gastrointestinal Disorders': '/img/super/Gastrointestinal Disorders.webp',
+  'Respiratory Disorders': '/img/super/Respiratory Disorders.webp',
+  'Kidney Disorders': '/img/super/Kidney Disorders.webp',
+  'Liver Disorders': '/img/super/Liver Disorders.webp',
+  'Diabetes Management': '/img/super/Diabetes Management.webp',
+  'Thyroid Disorders': '/img/super/Thyroid Disorders.webp',
+  'Obesity Management': '/img/super/Obesity Management.webp',
+  'Gynecological Disorders': '/img/super/Gynecological Disorders.webp',
+  'Infertility Management': '/img/super/Infertility Management.webp',
+  'Pediatric Care': '/img/super/Pediatric Care.webp',
+  'Cardiac Care': '/img/super/Cardiac Care.webp',
+  'Mental Health & Stress Disorders': '/img/super/Mental Health & Stress Disorders.webp',
+  'Joint & Arthritis Care': '/img/super/Joint & Arthritis Care.webp',
+  'Spine & Back Pain Disorders': '/img/super/Spine & Back Pain Disorders.webp',
+  'Hair & Scalp Disorders': '/img/super/Hair & Scalp Disorders.webp',
 };
 
 const specialityImageSrc = (name) => SPECIALITY_IMAGES[name];

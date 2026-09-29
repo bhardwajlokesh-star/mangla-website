@@ -1,12 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
-  Phone, Mail, MapPin, Clock, ChevronDown, ChevronRight,
-  Leaf, Droplet, Flame, Wind, Heart, ShieldCheck, Activity, Brain,
-  Sun, Moon, Sparkles, Check, ArrowRight, Quote,
-  ClipboardCheck, Stethoscope, FlaskConical, HeartPulse,
-  Eye, Ear, Bone, Star, Calendar, Send,
+  Phone, Mail, MapPin, Clock, ChevronDown, Leaf, Droplet, Flame, Wind,
+  Heart, ShieldCheck, Activity, Brain, Sun, Moon, Sparkles, Check,
+  ArrowRight, Quote, ClipboardCheck, Stethoscope, FlaskConical,
+  HeartPulse, Eye, Ear, Bone, Star, Calendar, Send
 } from 'lucide-react';
 import SEO from '../components/SEO';
 
@@ -169,22 +168,22 @@ const FaqItem = ({ q, a, isOpen, onClick }) => (
    ────────────────────────────────────────────────────────────── */
 
 const THERAPIES = [
-  { name: 'Snehan Therapy',   desc: 'Therapeutic internal and external oleation with medicated ghee and oils.',  icon: Droplet,      img: IMG('snehan_therapy.png') },
-  { name: 'Svedan Therapy',   desc: 'Steam and sudation therapy to mobilise toxins from the deep tissues.',      icon: Wind,         img: IMG('svedan_therapy.png') },
-  { name: 'Vaman Therapy',    desc: 'Doctor-supervised therapeutic emesis for chronic Kapha disorders.',          icon: Flame,        img: IMG('Vaman Therapy.png') },
-  { name: 'Virechan Therapy', desc: 'Cleansing purgation indicated for Pitta imbalance and skin disease.',        icon: FlaskConical, img: IMG('Virechan Therapy.png') },
-  { name: 'Basti Therapy',    desc: 'Medicated enema regarded as the principal treatment for Vata disorders.',    icon: Sparkles,     img: IMG('Basti Therapy.png') },
-  { name: 'Nasya Therapy',    desc: 'Nasal administration of medicated oils for the head and neck region.',       icon: Brain,        img: IMG('Nasya Therapy.png') },
-  { name: 'Raktamokshana',    desc: 'Selective blood purification for specific clinically reviewed cases.',       icon: Activity,     img: IMG('Raktamokshana.png') },
-  { name: 'Shirodhara',       desc: 'Continuous medicated oil stream over the forehead for deep mind reset.',     icon: Heart,        img: IMG('Shirodhara.png') },
-  { name: 'Hruday Basti',     desc: 'Warm oil pool over the heart region for stress and cardiac vitality.',       icon: HeartPulse,   img: IMG('Hruday Basti.png') },
-  { name: 'Karna Puram',      desc: 'Warm medicated oil filled in the ears for hearing and nervous system care.', icon: Ear,          img: IMG('Karna Puram.png') },
-  { name: 'Thalam',           desc: 'Medicated paste retained on the crown for sleep, focus and migraine.',       icon: Brain,        img: IMG('Thalam.png') },
-  { name: 'Kati Basti',       desc: 'Warm oil retention over the lumbar spine for chronic lower back issues.',    icon: Bone,         img: IMG('Kati basti.png') },
-  { name: 'Manya Basti',      desc: 'Warm oil pool over the cervical spine for neck stiffness and cervicalgia.',  icon: Bone,         img: IMG('Manya Basti.png') },
-  { name: 'Uttar Basti',      desc: 'Specialised therapeutic procedure for reproductive and urinary health.',     icon: ShieldCheck,  img: IMG('Uttar Basti.png') },
-  { name: 'Janu Basti',       desc: 'Warm oil retention over the knees for osteoarthritis and joint pain.',       icon: Bone,         img: IMG('Janu Basti.png') },
-  { name: 'Netra Tarpan',     desc: 'Medicated ghee retained over the eyes for vision care and ocular health.',   icon: Eye,          img: IMG('Netra Tarpan.png') },
+  { name: 'Snehan Therapy',   desc: 'Therapeutic internal and external oleation with medicated ghee and oils.',  icon: Droplet,      img: IMG('snehan_therapy.webp') },
+  { name: 'Svedan Therapy',   desc: 'Steam and sudation therapy to mobilise toxins from the deep tissues.',      icon: Wind,         img: IMG('svedan_therapy.webp') },
+  { name: 'Vaman Therapy',    desc: 'Doctor-supervised therapeutic emesis for chronic Kapha disorders.',          icon: Flame,        img: IMG('Vaman Therapy.webp') },
+  { name: 'Virechan Therapy', desc: 'Cleansing purgation indicated for Pitta imbalance and skin disease.',        icon: FlaskConical, img: IMG('Virechan Therapy.webp') },
+  { name: 'Basti Therapy',    desc: 'Medicated enema regarded as the principal treatment for Vata disorders.',    icon: Sparkles,     img: IMG('Basti Therapy.webp') },
+  { name: 'Nasya Therapy',    desc: 'Nasal administration of medicated oils for the head and neck region.',       icon: Brain,        img: IMG('Nasya Therapy.webp') },
+  { name: 'Raktamokshana',    desc: 'Selective blood purification for specific clinically reviewed cases.',       icon: Activity,     img: IMG('Raktamokshana.webp') },
+  { name: 'Shirodhara',       desc: 'Continuous medicated oil stream over the forehead for deep mind reset.',     icon: Heart,        img: IMG('Shirodhara.webp') },
+  { name: 'Hruday Basti',     desc: 'Warm oil pool over the heart region for stress and cardiac vitality.',       icon: HeartPulse,   img: IMG('Hruday Basti.webp') },
+  { name: 'Karna Puram',      desc: 'Warm medicated oil filled in the ears for hearing and nervous system care.', icon: Ear,          img: IMG('Karna Puram.webp') },
+  { name: 'Thalam',           desc: 'Medicated paste retained on the crown for sleep, focus and migraine.',       icon: Brain,        img: IMG('Thalam.webp') },
+  { name: 'Kati Basti',       desc: 'Warm oil retention over the lumbar spine for chronic lower back issues.',    icon: Bone,         img: IMG('Kati basti.webp') },
+  { name: 'Manya Basti',      desc: 'Warm oil pool over the cervical spine for neck stiffness and cervicalgia.',  icon: Bone,         img: IMG('Manya Basti.webp') },
+  { name: 'Uttar Basti',      desc: 'Specialised therapeutic procedure for reproductive and urinary health.',     icon: ShieldCheck,  img: IMG('Uttar Basti.webp') },
+  { name: 'Janu Basti',       desc: 'Warm oil retention over the knees for osteoarthritis and joint pain.',       icon: Bone,         img: IMG('Janu Basti.webp') },
+  { name: 'Netra Tarpan',     desc: 'Medicated ghee retained over the eyes for vision care and ocular health.',   icon: Eye,          img: IMG('Netra Tarpan.webp') },
 ];
 
 const DETAILED_THERAPIES = [
@@ -194,7 +193,7 @@ const DETAILED_THERAPIES = [
     description: 'Snehan is the foundational preparatory therapy where medicated ghee or oil is administered internally and externally in graduated doses. It softens accumulated doshas, lubricates tissues, and prepares the body for the main cleansing therapies that follow.',
     benefits: ['Lubricates joints and tissues', 'Calms Vata dosha', 'Prepares body for detox', 'Improves agni (digestive fire)'],
     conditions: ['Dryness', 'Constipation', 'Joint stiffness', 'Pre-Panchkarma preparation'],
-    img: IMG('snehan_therapy.png'),
+    img: IMG('snehan_therapy.webp'),
   },
   {
     name: 'Svedan Therapy',
@@ -202,7 +201,7 @@ const DETAILED_THERAPIES = [
     description: 'Following oleation, Svedan applies controlled steam and heat to open the channels (srotas), liquefy ama (toxins), and prepare them for elimination. Different forms — bashpa sweda, nadi sweda, pinda sweda — are chosen based on the patient.',
     benefits: ['Opens body channels', 'Mobilises toxins', 'Improves circulation', 'Relieves stiffness'],
     conditions: ['Body stiffness', 'Cold extremities', 'Post-oleation phase', 'Musculoskeletal tension'],
-    img: IMG('svedan_therapy.png'),
+    img: IMG('svedan_therapy.webp'),
   },
   {
     name: 'Vaman Therapy',
@@ -210,7 +209,7 @@ const DETAILED_THERAPIES = [
     description: 'Vaman is a doctor-supervised emesis therapy that clears excess Kapha from the upper respiratory and gastrointestinal tract. After a structured preparation phase, the procedure is performed in a calm clinical setting with continuous monitoring.',
     benefits: ['Clears excess Kapha', 'Improves respiratory health', 'Detoxifies upper digestive tract', 'Eases chronic congestion'],
     conditions: ['Asthma', 'Chronic allergies', 'Recurrent congestion', 'Skin disorders linked to Kapha'],
-    img: IMG('Vaman Therapy.png'),
+    img: IMG('Vaman Therapy.webp'),
   },
   {
     name: 'Virechan Therapy',
@@ -218,7 +217,7 @@ const DETAILED_THERAPIES = [
     description: 'Virechan is a planned therapeutic purgation that flushes excess Pitta and accumulated ama through the bowels. It is indicated for skin disease, liver disorders, hyperacidity, and metabolic imbalances with Pitta predominance.',
     benefits: ['Eliminates excess Pitta', 'Improves liver and metabolism', 'Clears skin disorders', 'Reduces hyperacidity'],
     conditions: ['Skin conditions', 'Hyperacidity', 'Liver disorders', 'Migraine of Pitta origin'],
-    img: IMG('Virechan Therapy.png'),
+    img: IMG('Virechan Therapy.webp'),
   },
   {
     name: 'Basti Therapy',
@@ -226,7 +225,7 @@ const DETAILED_THERAPIES = [
     description: 'Basti is the administration of medicated decoctions or oils through the rectum. Classical Ayurveda considers Basti the foremost treatment for Vata disorders — particularly chronic pain, neurological complaints, and degenerative conditions.',
     benefits: ['Pacifies Vata dosha', 'Eases chronic pain', 'Supports nervous system', 'Improves joint mobility'],
     conditions: ['Sciatica', 'Arthritis', 'Constipation', 'Lumbar and cervical pain'],
-    img: IMG('Basti Therapy.png'),
+    img: IMG('Basti Therapy.webp'),
   },
   {
     name: 'Nasya Therapy',
@@ -234,7 +233,7 @@ const DETAILED_THERAPIES = [
     description: 'Nasya delivers medicated oils through the nostrils to clear and nourish the structures of the head, neck, and sense organs. It is particularly effective for sinus issues, headaches, hair fall, and stress-related complaints.',
     benefits: ['Clears sinuses', 'Improves clarity and focus', 'Strengthens senses', 'Supports hair health'],
     conditions: ['Sinusitis', 'Migraine', 'Hair fall', 'Cervical spondylosis'],
-    img: IMG('Nasya Therapy.png'),
+    img: IMG('Nasya Therapy.webp'),
   },
   {
     name: 'Shirodhara',
@@ -242,7 +241,7 @@ const DETAILED_THERAPIES = [
     description: 'A warm, continuous stream of medicated oil flows over the forehead — specifically the ajna marma — for 30 to 45 minutes. Few therapies in classical Ayurveda have such profound effect on the nervous system and mental equilibrium.',
     benefits: ['Reduces stress and anxiety', 'Deep nervous-system reset', 'Improves sleep quality', 'Supports memory and clarity'],
     conditions: ['Insomnia', 'Stress and anxiety', 'Hair fall', 'Headaches'],
-    img: IMG('Shirodhara.png'),
+    img: IMG('Shirodhara.webp'),
   },
 ];
 

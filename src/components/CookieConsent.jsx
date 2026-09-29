@@ -1,44 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ShieldCheck, X, Settings } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ShieldCheck, X } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────────────────
    COOKIE CONSENT BANNER (GA4 consent-mode aware)
    - Shows on first visit
    - Stores choice in localStorage
    - Updates GA4 consent state when accepted
+   - Sends a page_view on every route change once accepted
    ────────────────────────────────────────────────────────────── */
 
 const STORAGE_KEY = 'mh_cookie_consent';
 
+const readChoice = () => {
+  try { return localStorage.getItem(STORAGE_KEY); } catch { return null; }
+};
+
+const applyConsent = (accepted) => {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('consent', 'update', {
+    ad_storage:        accepted ? 'granted' : 'denied',
+    analytics_storage: accepted ? 'granted' : 'denied',
+  });
+};
+
 const CookieConsent = () => {
-  const [visible, setVisible] = useState(false);
+  const { pathname } = useLocation();
+  const [choice, setChoice] = useState(readChoice);
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
-    const choice = typeof window !== 'undefined' ? localStorage.getItem(STORAGE_KEY) : null;
-    if (!choice) setVisible(true);
-    else applyConsent(choice === 'accept');
-  }, []);
+    if (choice) applyConsent(choice === 'accept');
+  }, [choice]);
 
-  const applyConsent = (accepted) => {
-    if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
-    window.gtag('consent', 'update', {
-      ad_storage:        accepted ? 'granted' : 'denied',
-      analytics_storage: accepted ? 'granted' : 'denied',
-    });
-    if (accepted) {
-      window.gtag('event', 'page_view', { page_path: window.location.pathname });
+  useEffect(() => {
+    if (choice === 'accept' && typeof window.gtag === 'function') {
+      window.gtag('event', 'page_view', { page_path: pathname, page_location: window.location.href });
     }
-  };
+  }, [choice, pathname]);
 
   const handle = (accepted) => {
-    localStorage.setItem(STORAGE_KEY, accepted ? 'accept' : 'reject');
-    applyConsent(accepted);
-    setVisible(false);
+    const value = accepted ? 'accept' : 'reject';
+    try { localStorage.setItem(STORAGE_KEY, value); } catch { /* storage blocked */ }
+    setChoice(value);
   };
 
-  if (!visible) return null;
+  if (choice) return null;
 
   return (
     <div

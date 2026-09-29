@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Calendar, Leaf, Sparkles, ChevronRight, ArrowRight } from 'lucide-react';
@@ -70,22 +70,22 @@ const ImagePlaceholder = ({ label = 'Image Placeholder', ratio = '4/3', rounded 
 const METHODS = [
   {
     name: 'Snehan & Swedan',
-    img: '/img/painManagement/Snehan and Swedan.png',
+    img: '/img/painManagement/Snehan and Swedan.webp',
     body: 'Snehan is the application of warm medicated oil to the affected area, followed by Swedan — sudation using steam or localised heat. Together they pacify Vata, loosen stiffness and relieve sprains, back ache and muscular injuries. For abdominal pain and lumbar discomfort, Basti (medicated enema) is added as a focused Vata treatment.',
   },
   {
     name: 'Agnikarma',
-    img: '/img/painManagement/Agnikarma.png',
+    img: '/img/painManagement/Agnikarma.webp',
     body: 'Agnikarma is a precise heat (thermal cautery) therapy performed in two ways — direct heat and indirect heat. We use the gentler indirect method, applying a metal rod with a blunt, rounded tip heated over a flame to the painful point. It often gives quick relief in joint pain, cervical and lumbar spondylosis, and sciatica.',
   },
   {
     name: 'Blood Letting (Raktamokshana)',
-    img: '/img/painManagement/Blood Letting (Raktamokshana).png',
+    img: '/img/painManagement/Blood Letting (Raktamokshana).webp',
     body: 'Raktamokshana removes vitiated blood and is performed in more than one way. Leech therapy (Jalaukavacharana) uses medicinal leeches that draw only the impure blood, helping conditions such as painful heels and certain headaches. Controlled venesection is used in selected cases where removing a small amount of blood supports the treatment.',
   },
   {
     name: 'Lepa',
-    img: '/img/painManagement/Lepa.png',
+    img: '/img/painManagement/Lepa.webp',
     body: 'Lepa is the application of a herbal paste over the affected area, left in place to dry and act locally. It is especially useful for swelling, injury and sprains — reducing inflammation and pain directly at the site.',
   },
 ];

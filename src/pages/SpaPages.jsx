@@ -264,7 +264,7 @@ const HAIR_TIERS = [
   { tag: 'Medium Hair', duration: '90 min', price: '1200' },
   { tag: 'Long Hair',   duration: '90 min', price: '1400' },
 ];
-const HAIR_COVER = '/img/hair-spa/Anti-Dandruff Hair Spa Long Hair.png';
+const HAIR_COVER = '/img/hair-spa/Anti-Dandruff Hair Spa Long Hair.webp';
 /* 4 types × 3 hair-length tiers = 12 packages (as on the reference page) */
 const HAIR_PACKAGES = HAIR_TYPES.flatMap(name =>
   HAIR_TIERS.map(tier => ({
@@ -273,7 +273,7 @@ const HAIR_PACKAGES = HAIR_TYPES.flatMap(name =>
 );
 
 const SKIN_TREATMENTS = ['Cleaning', 'Scrubbing', 'Mukhyabhang', 'Mukhswed', 'Facelep'];
-const SKIN_COVER = '/img/skinSPa.png';
+const SKIN_COVER = '/img/skinSPa.webp';
 const SKIN_PACKAGES = [
   { name: 'Normal Skin Spa',       includes: SKIN_TREATMENTS, duration: '90 min', price: '800',  img: SKIN_COVER },
   { name: 'Anti-Acne Skin Spa',    includes: SKIN_TREATMENTS, duration: '90 min', price: '1000', img: SKIN_COVER },
@@ -282,7 +282,7 @@ const SKIN_PACKAGES = [
   { name: 'Rejuvenating Skin Spa', includes: SKIN_TREATMENTS, duration: '90 min', price: '1200', img: SKIN_COVER },
 ];
 
-const BODY_COVER = '/img/Body-Spa/BodySpa.png';
+const BODY_COVER = '/img/Body-Spa/BodySpa.webp';
 const BODY_PACKAGES = [
   { name: 'Normal Massage Body Spa', includes: ['Abhyangam', 'Swedana'], duration: '45 min', price: '800',  img: BODY_COVER },
   { name: 'Deep Tissue Massage Spa', includes: ['Abhyangam', 'Swedana'], duration: '45 min', price: '1000', img: BODY_COVER },

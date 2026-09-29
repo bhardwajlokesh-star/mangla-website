@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ChevronRight, Coffee, Utensils, Apple, Leaf, Heart, Clock,
-  MapPin, Phone, Star, Check, ShoppingCart, Plus, Minus, X,
-  FlaskConical, Droplet, Wind, Zap, Users, Award, BookOpen,
-  CheckCircle2
+  Coffee, Utensils, Apple, Leaf, Heart, Clock, Phone, Star, ShoppingCart,
+  Plus, Minus, X, FlaskConical, Droplet, Wind, Zap, CheckCircle2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -390,7 +388,6 @@ const HospitalCafePage = () => {
   const [selectedCategory, setSelectedCategory] = useState('breakfast');
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
-  const [orderDate, setOrderDate] = useState('');
 
   const currentCategory = MENU_CATEGORIES.find(c => c.id === selectedCategory);
   const currentItems = currentCategory?.items || [];

@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Stethoscope, Sparkles, ShieldCheck, Activity, Microscope, Zap,
-  ChevronRight, Droplets, Bone, Leaf, ArrowRight, Check
+  Stethoscope, Sparkles, Activity, Microscope, Zap, Droplets, Bone, Leaf,
+  ArrowRight, Check
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 

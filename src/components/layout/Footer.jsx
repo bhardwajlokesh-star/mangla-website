@@ -1,8 +1,7 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Phone, Mail, MapPin, Clock, Leaf, ChevronRight,
-  ShieldCheck, Award, HeartPulse, Send,
+  Phone, Mail, MapPin, Clock, ChevronRight, ShieldCheck, Award,
+  HeartPulse, Send
 } from 'lucide-react';
 
 /* ──────────────────────────────────────────────────────────────
@@ -165,7 +164,7 @@ const Footer = () => {
               display: 'inline-flex', alignItems: 'center',
               boxShadow: '0 10px 22px -6px rgba(0,0,0,.4)',
             }}>
-              <img src="/img/logo/rogjeet.png" alt="Rogjeet Ayurveda" style={{ height: 38, width: 'auto', display: 'block' }} />
+              <img src="/img/logo/rogjeet.webp" alt="Rogjeet Ayurveda" style={{ height: 38, width: 'auto', display: 'block' }} />
             </div>
             <div>
               <div className="ft-display" style={{ fontSize: 22, fontWeight: 700, color: '#fff', letterSpacing: '-0.5px', lineHeight: 1 }}>

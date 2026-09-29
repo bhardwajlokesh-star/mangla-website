@@ -1,11 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
-  Menu, X, ChevronDown, Phone, MapPin, Clock, Search, Lock,
-  Stethoscope, Scissors, ClipboardCheck, ScanLine, TestTube2, Waves,
-  UserCheck, Sun, Heart, Activity, Bone, Pill, Brain, Apple,
-  HeartPulse, Dumbbell, Leaf, Sparkles, ArrowRight, Baby,
-  Droplet, Flame, ShoppingBag, ShieldCheck, Salad, Utensils, FlaskConical,
+  X, ChevronDown, Phone, MapPin, Clock, Search, Lock, Stethoscope,
+  ClipboardCheck, Sun, Brain, HeartPulse, Leaf, Sparkles, ArrowRight,
+  Baby, ShieldCheck, Salad, Utensils
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -105,12 +103,15 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => {
+  // Close any open menus when the route changes.
+  const [lastLocationKey, setLastLocationKey] = useState(location.key);
+  if (lastLocationKey !== location.key) {
+    setLastLocationKey(location.key);
     setOpenMega(null);
     setMobileOpen(false);
     setMobileSub(null);
     setSearchOpen(false);
-  }, [location]);
+  }
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : '';
@@ -416,7 +417,7 @@ const Navbar = () => {
                 display: 'inline-flex', alignItems: 'center',
                 boxShadow: '0 4px 10px -2px rgba(0,0,0,.25)',
               }}>
-                <img src="/img/logo/rogjeet.png" alt="Rogjeet Ayurveda" style={{ height: 18, width: 'auto', display: 'block' }} />
+                <img src="/img/logo/rogjeet.webp" alt="Rogjeet Ayurveda" style={{ height: 18, width: 'auto', display: 'block' }} />
               </div>
               <span className="mh-display" style={{ fontSize: 12.5, fontWeight: 600, color: 'rgba(247,243,237,.85)', letterSpacing: '.02em' }}>
                 A Unit of <span style={{ color: '#c8a96e', fontWeight: 700 }}>Mangla Healthcare</span>
@@ -454,7 +455,7 @@ const Navbar = () => {
               {/* LOGO */}
               <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 13, flexShrink: 0, minWidth: 0 }}>
                 <img
-                  src="/img/logo/rogjeet.png"
+                  src="/img/logo/rogjeet.webp"
                   alt="Rogjeet Ayurveda"
                   className="nav-logo-img"
                   style={{ height: scrolled ? 46 : 54, width: 'auto', flexShrink: 0, objectFit: 'contain', transition: 'height .28s' }}
@@ -685,7 +686,7 @@ const Navbar = () => {
                     background: '#fff', borderRadius: 9, padding: '5px 9px',
                     display: 'inline-flex', alignItems: 'center',
                   }}>
-                    <img src="/img/logo/rogjeet.png" alt="Rogjeet Ayurveda" style={{ height: 26, width: 'auto', display: 'block' }} />
+                    <img src="/img/logo/rogjeet.webp" alt="Rogjeet Ayurveda" style={{ height: 26, width: 'auto', display: 'block' }} />
                   </div>
                   <div>
                     <div className="mh-display" style={{ fontSize: 15, fontWeight: 700, lineHeight: 1 }}>

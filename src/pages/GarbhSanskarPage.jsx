@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Phone, Leaf, Sparkles, ChevronRight, Check } from 'lucide-react';
@@ -150,7 +150,7 @@ const GarbhSanskarPage = () => {
           <div className="gs-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'flex-start' }}>
             {/* image */}
             <motion.div initial={{ opacity: 0, x: -22 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.55 }}>
-              <ImagePlaceholder label="Garbh Sanskar" ratio="1/1" rounded={24} src="/img/garbh sanskar.png" />
+              <ImagePlaceholder label="Garbh Sanskar" ratio="1/1" rounded={24} src="/img/garbh sanskar.webp" />
             </motion.div>
 
             {/* content */}

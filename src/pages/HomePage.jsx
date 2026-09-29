@@ -1,14 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import {
-    ChevronLeft, ChevronRight, Phone, MapPin, Activity,
-    Stethoscope, Sparkles, Star, CheckCircle2, Heart, Award,
-    Users, Leaf, ChevronDown, Play, Calendar, ChevronUp, Video,
-    Building2, Droplets, Baby, Flower2, Pill, ClipboardCheck, ArrowRight,
+  ChevronLeft, ChevronRight, Phone, MapPin, Activity, Stethoscope,
+  Sparkles, CheckCircle2, Users, ChevronDown, Calendar, ChevronUp, Video,
+  Building2, Droplets, Baby, Flower2, Pill, ClipboardCheck, ArrowRight
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useLanguage } from '../components/layout/LanguageContext';
-import SEO, { organizationSchema } from '../components/SEO';
+import SEO from '../components/SEO';
+import { organizationSchema } from '../components/seoSchemas';
 import AccreditationStrip from '../components/AccreditationStrip';
 
 /* ════════════════════════════════════════════════════════════
@@ -98,25 +97,6 @@ const Styles = () => (
   `}</style>
 );
 
-/* ── Animated Counter ── */
-const Counter = ({ to, suffix = '' }) => {
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true });
-    const [val, setVal] = useState(0);
-    useEffect(() => {
-        if (!inView) return;
-        let start = 0;
-        const step = to / 60;
-        const timer = setInterval(() => {
-            start += step;
-            if (start >= to) { setVal(to); clearInterval(timer); }
-            else setVal(Math.floor(start));
-        }, 25);
-        return () => clearInterval(timer);
-    }, [inView, to]);
-    return <span ref={ref}>{val.toLocaleString()}{suffix}</span>;
-};
-
 /* ── FAQ ── */
 const FaqItem = ({ q, a }) => {
     const [open, setOpen] = useState(false);
@@ -203,7 +183,6 @@ const HomePage = () => {
     const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
     const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '28%']);
     const heroOpacity = useTransform(scrollYProgress, [0, 0.75], [1, 0]);
-    const { t } = useLanguage();
 
     useEffect(() => {
         const timer = setInterval(() => setSlide(p => (p + 1) % slides.length), 6000);
@@ -287,10 +266,10 @@ const HomePage = () => {
                                         <Link to="/doctors" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '14px 26px', borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
                                             <Users size={16} /> Our Doctors
                                         </Link>
-                                        <Link to="/locate" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '14px 26px', borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
+                                        <Link to="/contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '14px 26px', borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
                                             <MapPin size={16} /> Locate Clinic
                                         </Link>
-                                        <Link to="/services/video-consultation" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '14px 26px', borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
+                                        <Link to="/contact" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.25)', color: '#fff', padding: '14px 26px', borderRadius: 100, fontSize: 15, fontWeight: 500, textDecoration: 'none' }}>
                                             <Video size={16} /> Video Consultation
                                         </Link>
                                     </motion.div>
@@ -412,7 +391,7 @@ const HomePage = () => {
                             ))}
                         </div>
                         <div style={{ textAlign: 'center', marginTop: 44 }}>
-                            <Link to="/diseases" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 34px', borderRadius: 100, background: '#B84C2B', color: '#fff', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 6px 20px rgba(184,76,43,.35)' }}>
+                            <Link to="/super-speciality" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '14px 34px', borderRadius: 100, background: '#B84C2B', color: '#fff', fontSize: 15, fontWeight: 700, textDecoration: 'none', boxShadow: '0 6px 20px rgba(184,76,43,.35)' }}>
                                 Click Here For All Treatments <ArrowRight size={17} />
                             </Link>
                         </div>

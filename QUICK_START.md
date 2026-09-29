@@ -1,3 +1,5 @@
+> **Outdated (Sep 2026):** parts of this guide describe settings the site never used (e.g. `VITE_PHONE_NUMBER`). For current setup see [README.md](README.md), `src/config/clinic.js`, and [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md).
+
 # 🎯 Mangla Healthcare - Quick Start Checklist
 
 **Your website is READY! Here's what to do next:**

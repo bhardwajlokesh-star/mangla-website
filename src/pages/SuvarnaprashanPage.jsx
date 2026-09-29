@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -282,10 +282,10 @@ const SuvarnaprashanPage = () => {
 
           <div className="sv-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
             <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55 }}>
-              <ImagePlaceholder label="Suvarnaprashan Image 1" ratio="16/10" rounded={24} accent src="/img/suvarnaprashan1.png" />
+              <ImagePlaceholder label="Suvarnaprashan Image 1" ratio="16/10" rounded={24} accent src="/img/suvarnaprashan1.webp" />
             </motion.div>
             <motion.div initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.55, delay: 0.12 }}>
-              <ImagePlaceholder label="Suvarnaprashan Image 2" ratio="16/10" rounded={24} accent src="/img/suvarnaprashan2.png" />
+              <ImagePlaceholder label="Suvarnaprashan Image 2" ratio="16/10" rounded={24} accent src="/img/suvarnaprashan2.webp" />
             </motion.div>
           </div>
         </div>

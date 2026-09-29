@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PortalLayout from './PortalLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Globe, Lock, Bell, User, Palette, Shield,
-  ChevronRight, Check, X, Eye, EyeOff, Save,
-  Monitor, Moon, Sun, Smartphone
+  Globe, Lock, Bell, User, Palette, Shield, ChevronRight, Check, X, Eye,
+  EyeOff, Save, Monitor, Moon, Sun
 } from 'lucide-react';
 
 const Toggle = ({ checked, onChange }) => (

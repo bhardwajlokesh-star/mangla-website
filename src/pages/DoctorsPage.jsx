@@ -1,7 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowRight, Award, Calendar, Languages, Stethoscope } from 'lucide-react';
+import { ChevronRight, ArrowRight, Languages, Stethoscope } from 'lucide-react';
 import { doctors } from './doctorsData';
 import SEO from '../components/SEO';
 

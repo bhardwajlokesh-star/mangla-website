@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import PortalLayout from './PortalLayout';
 import { motion } from 'framer-motion';
 import {
-  Users, FileText, Calendar, Activity, ChevronRight,
-  TrendingUp, TrendingDown, MoreVertical, ArrowUpRight,
-  Clock, CheckCircle, AlertCircle, Loader2
+  Users, FileText, Calendar, Activity, ChevronRight, TrendingUp,
+  TrendingDown, MoreVertical, ArrowUpRight, Clock, CheckCircle, Loader2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

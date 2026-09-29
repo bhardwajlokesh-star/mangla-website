@@ -1,230 +1,124 @@
-# Free Health Test → Google Sheets
+# Free Health Test → Google Sheet
 
-This guide wires the Free Health Test form on the Mangla Healthcare site to a
-Google Sheet you control. No backend, no paid services — just a Google account.
-
-The data flow:
+Every Free Health Test submitted on the website becomes one row in a Google
+Sheet that the clinic owns. Photos go to a private Google Drive folder and
+are linked from the row. No server or paid service is needed, only a Google
+account.
 
 ```
-React form  →  fetch (no-cors POST)  →  Google Apps Script Web App  →  Google Sheet row
+Website form  →  Google Apps Script web app  →  Google Sheet row (+ photo in Drive)
 ```
+
+Setup takes about 10 minutes. Use the Google account the clinic will keep
+long-term, because the Sheet and photos live in that account's Drive.
 
 ---
 
-## 1. Create the Google Sheet
+## What the Sheet looks like
 
-1. Go to https://sheets.new — a new blank sheet opens.
-2. Rename it to **Mangla – Health Test Submissions**.
-3. In **Row 1**, paste this header row (one cell each, in order). It's already
-   tab-separated, so pasting fills one column per heading:
+**Submissions tab** (one row per assessment):
 
-```
-date	timestamp	name	age	gender	phone	email	problem	symptoms	lifestyle	hasImage	imageName	imageSize	notes	source	userAgent
-```
+| Column | Filled by | Notes |
+| --- | --- | --- |
+| Reference ID | Website | e.g. `HT-260930-4K7Q`. The patient sees it on screen and can quote it when calling. |
+| Submitted (IST) | Script | Real date/time, so you can sort and filter by it. |
+| **Status** | Staff | Dropdown: New → Contacted → Appointment Booked → Closed / Spam. The whole row changes colour. |
+| **Staff Notes** | Staff | Free text for call notes. |
+| Name, Age, Gender, Phone, Email | Patient | Phone is stored as plain 10 digits. |
+| Primary Concern, Symptoms, Lifestyle, Lifestyle Notes, Patient Notes | Patient | |
+| Photo | Script | "View photo" link. Only people with access to the photo folder can open it. |
+| Consent | Patient | Always "Yes", because the form can't be sent without it. |
+| Page, Device | Script | Which page they submitted from, and their browser. Useful for spotting spam. |
 
-   The order must match the `appendRow([...])` in the script below.
-   (`date` = readable IST date/time; `timestamp` = machine-sortable ISO.)
+The header row and the first five columns stay visible while you scroll.
+Filters are switched on, so staff can show only `New` rows, for example.
 
----
-
-## 2. Add the Apps Script
-
-1. In the sheet, click **Extensions → Apps Script**. A new editor opens.
-2. Delete everything in `Code.gs` and paste the script below.
-3. Click the disk icon to save. Give the project a name like `ManglaHealthTest`.
-
-```javascript
-// Code.gs — Rogjeet Ayurveda Free Health Test sink
-const SHEET_NAME = 'Sheet1'; // change if you renamed the tab
-
-// MUST be identical to VITE_HEALTH_TEST_TOKEN in the website's .env file.
-const SECRET = 'change-this-to-a-long-random-string';
-
-// Optional: get an email on every submission. Leave '' to disable.
-const EMAIL_TO = '';
-
-function doPost(e) {
-  try {
-    const data = JSON.parse(e.postData.contents);
-
-    // 1) Reject bots: honeypot field must be empty.
-    if (data.website) return ok_();          // silently drop
-
-    // 2) Reject anything without the shared secret.
-    if (SECRET && data.token !== SECRET) return deny_('bad token');
-
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
-
-    // Server-side date as a fallback if the client didn't send one.
-    const dateIST = data.date || Utilities.formatDate(
-      new Date(), 'Asia/Kolkata', 'dd MMM yyyy, hh:mm a'
-    );
-
-    // Order MUST match the header row.
-    sheet.appendRow([
-      dateIST,
-      data.timestamp || new Date().toISOString(),
-      data.name      || '',
-      data.age       || '',
-      data.gender    || '',
-      data.phone     || '',
-      data.email     || '',
-      data.problem   || '',
-      data.symptoms  || '',
-      data.lifestyle || '',
-      data.hasImage  || '',
-      data.imageName || '',
-      data.imageSize || '',
-      data.notes     || '',
-      data.source    || '',
-      data.userAgent || '',
-    ]);
-
-    if (EMAIL_TO) {
-      MailApp.sendEmail(EMAIL_TO, 'New Health Test — ' + (data.name || 'Unknown'),
-        'Name: '  + data.name +
-        '\nPhone: ' + data.phone +
-        '\nEmail: ' + data.email +
-        '\nConcern: ' + data.problem +
-        '\nWhen: ' + dateIST);
-    }
-
-    return ok_();
-  } catch (err) {
-    return deny_(err.toString());
-  }
-}
-
-function ok_()      { return json_({ ok: true }); }
-function deny_(msg) { return json_({ ok: false, error: msg }); }
-function json_(o)   {
-  return ContentService.createTextOutput(JSON.stringify(o))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-```
-
-> **Set `SECRET`** to a long random string and put the **same** value in the
-> website's `.env` as `VITE_HEALTH_TEST_TOKEN`. The two must match or every
-> submission is rejected.
+**Dashboard tab:** totals for today, the last 7 days and this month, plus
+counts by status and by primary concern. It updates on its own.
 
 ---
 
-## 3. Deploy as a Web App
+## 1. Create the Sheet and add the script
+
+1. Go to <https://sheets.new> and name the sheet **Mangla – Health Test Submissions**.
+2. Click **Extensions → Apps Script**.
+3. Delete everything in `Code.gs`, then paste in the full contents of
+   [`google-apps-script/Code.gs`](google-apps-script/Code.gs) from this project.
+4. Optional settings at the top of the file:
+   - `ALERT_EMAILS`: e.g. `'reception@manglahealthcare.com'` to get an email for each submission.
+   - `SHARED_TOKEN`: see section 4.
+5. Click 💾 **Save**.
+
+## 2. Run setup once
+
+1. In the toolbar's function dropdown, pick **`setup`**, then click **▶ Run**.
+2. Google asks for permission. Choose your account, then **Advanced → Go to (project) → Allow**.
+   The script needs Sheets (write rows), Drive (save photos) and, if you set
+   `ALERT_EMAILS`, Gmail (send alerts).
+3. Go back to the Sheet. You should now see the **Submissions** and
+   **Dashboard** tabs, and a Drive folder called **Mangla Health Test Photos**.
+
+## 3. Deploy as a web app
 
 1. Click **Deploy → New deployment**.
-2. Click the gear icon → choose **Web app**.
+2. Click the ⚙️ icon and choose **Web app**.
 3. Fill in:
-   - **Description:** `Health Test sink v1`
-   - **Execute as:** *Me (your@gmail.com)*
-   - **Who has access:** **Anyone** (this is required so the public form can post)
-4. Click **Deploy**. Google will ask for permission — review and **Allow**.
-5. Copy the **Web app URL**. It looks like
-   `https://script.google.com/macros/s/AKfycb.../exec`
+   - **Execute as:** *Me*
+   - **Who has access:** *Anyone* (needed so the public form can post)
+4. Click **Deploy** and copy the **Web app URL** (it ends in `/exec`).
+5. Optional check: open that URL in a browser. You should see
+   `{"ok":true,"service":"Mangla Health Test sink"}`.
 
-> Every time you change the script you must click **Deploy → Manage deployments
-> → ✏️ Edit → New version → Deploy** to publish the change. Keep the same URL
-> by editing the existing deployment rather than creating a new one.
+> **When you change the script later**, use **Deploy → Manage deployments →
+> ✏️ Edit → Version: New version → Deploy**. That keeps the same URL.
+> Choosing "New deployment" gives you a new URL, and the website would keep
+> posting to the old one.
 
----
+## 4. Connect the website
 
-## 4. Wire it into the site
-
-You have two options.
-
-### Option A — environment variable (recommended)
-
-Create a `.env` file in the project root:
+In the project root, create `.env.local` (or set these in your hosting
+provider's environment settings), then rebuild and redeploy the site:
 
 ```
-VITE_HEALTH_TEST_ENDPOINT=https://script.google.com/macros/s/REPLACE_ID/exec
+VITE_HEALTH_TEST_ENDPOINT=https://script.google.com/macros/s/XXXXXXXX/exec
+# Optional: must match SHARED_TOKEN in Code.gs
+VITE_HEALTH_TEST_TOKEN=
 ```
 
-Restart `npm run dev`. The URL is now picked up automatically.
+About the token: anything that starts with `VITE_` is copied into the
+public website code, so the token is not a real secret. It only filters
+out casual junk. The real protections are in the script: the hidden
+honeypot field, required name and a valid 10-digit phone, at most 3
+submissions per phone per hour, and duplicate-submission detection.
 
-For production (Vercel, Netlify, etc.), set the same variable in the host's
-environment-variables panel.
-
-### Option B — hard-code
-
-Open `src/utils/submitHealthTest.js` and replace the placeholder in
-`SHEET_ENDPOINT`.
-
----
+If `VITE_HEALTH_TEST_ENDPOINT` is missing, the form won't pretend to work.
+It tells the patient to call the clinic instead.
 
 ## 5. Test it
 
-1. Run `npm run dev`.
-2. Open the site, go to **Free Health Test**, fill the form, click **Submit
-   Assessment**.
-3. Switch to the Google Sheet — a new row should appear within a second.
+1. Open the website's **Free Health Test**, fill it in, attach a photo and submit.
+2. The success screen shows a reference ID.
+3. Within a few seconds, a row with that ID appears in **Submissions**, with
+   Status **New** and a working **View photo** link.
 
-If it doesn't:
+If nothing appears:
 
-- Open the browser **DevTools → Network** tab and look at the request to
-  `/exec`. Because we use `mode: 'no-cors'`, the response is opaque; that's
-  expected and **not** an error.
-- In the Apps Script editor, open **Executions** (left sidebar, clock icon) and
-  look for the most recent `doPost` run. Any thrown error shows up there.
-- The most common mistake is **redeploying as a new deployment** instead of a
-  new version of the existing one — that gives you a new URL and the old one
-  silently stops being updated.
+- In the Apps Script editor, open **Executions** (clock icon). Any error shows there.
+- Check that the website's `VITE_HEALTH_TEST_ENDPOINT` is the **current** `/exec` URL.
+- Check that **Who has access** is set to **Anyone**.
 
 ---
 
-## 6. Recommended hardening (optional)
+## Daily use for staff
 
-### 6.1 Send an email alert on every submission
+- Filter **Status = New** to see who still needs a call.
+- After calling, change **Status** and add a line in **Staff Notes**.
+- Share the Sheet (and the photos folder) only with staff who need it: **Share → add their Google account**.
+  Don't use "Anyone with the link".
 
-In the script, uncomment the `EMAIL_TO` constant and the `MailApp.sendEmail`
-line inside `notify_`. Then call `notify_(data)` from inside `doPost`, right
-after `appendRow`.
+## Privacy
 
-### 6.2 Spam protection
-
-Add a simple honeypot field to the React form — a hidden input that bots fill
-but humans don't. In the Apps Script, reject any row where the honeypot field
-isn't empty:
-
-```javascript
-if (data.website) return;  // honeypot
-```
-
-### 6.3 Rate-limit by IP
-
-Apps Script doesn't see the client IP, so use the `userAgent` + `timestamp`
-columns and add a conditional-format rule in Sheets to flag duplicates within
-60 seconds.
-
-### 6.4 Store uploaded images
-
-The current form only sends the image **filename** and size, not the binary
-data (that would balloon the request and exceed Apps Script limits). If you
-need the actual images, switch to a direct **Google Drive upload** flow:
-
-1. In the script, accept a base64-encoded image string.
-2. `DriveApp.createFile(...)` writes it to a folder you specify.
-3. Store the resulting file's URL in the sheet.
-
-A 5 MB image base64-encoded becomes ~7 MB — workable for occasional submissions
-but slow on mobile networks. For higher volume, use a dedicated service like
-Cloudinary or S3.
-
----
-
-## What's stored
-
-| Column | Source |
-| --- | --- |
-| `timestamp` | ISO timestamp generated client-side |
-| `name`, `age`, `gender`, `phone`, `email` | Step 1 of the form |
-| `problem` | Step 2 — primary concern |
-| `symptoms` | Step 3 — comma-joined |
-| `lifestyle` | Step 4 — comma-joined |
-| `hasImage`, `imageName`, `imageSize` | Step 5 metadata |
-| `notes` | Step 6 free text |
-| `source` | The page URL that submitted (e.g. `/health-test`) |
-| `userAgent` | Browser string — useful for spotting bots |
-
-No personal data is stored anywhere else. The sheet itself is governed by your
-own Google account's access controls — share it only with people who need to
-see patient submissions.
+The Sheet and photos stay in the clinic's own Google account. Nothing is
+stored on the website. Patients must tick a consent checkbox before they
+can submit. Delete rows and photos you no longer need, and keep sharing
+limited to clinical staff.

@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import PortalLayout from './PortalLayout';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Plus, Trash2, Utensils, Dumbbell, Clock, Info,
-  CheckCircle2, Printer, X, Upload, Sun, Sunset, Moon
+  Plus, Trash2, Utensils, Dumbbell, Info, CheckCircle2, Printer, Sun,
+  Sunset, Moon
 } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';

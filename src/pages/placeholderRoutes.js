@@ -69,8 +69,5 @@ export const placeholderRoutes = [
   { path: '/pathya/panchkarma-diet',     category: 'Pathya',        title: 'Panchkarma Diet' },
   // '/garbh-sanskar' is served by the dedicated GarbhSanskarPage (see App.jsx)
 
-  // Footer utility pages
-  { path: '/privacy', category: 'Patient Information', title: 'Privacy Policy' },
-  { path: '/terms',   category: 'Patient Information', title: 'Terms of Service' },
-  { path: '/sitemap', category: 'Patient Information', title: 'Sitemap' },
+  // '/privacy', '/terms', '/disclaimer', '/sitemap' are served by LegalPage (see App.jsx)
 ];
