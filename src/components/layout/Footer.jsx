@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSheetSubmit } from '../../utils/useSheetSubmit';
 import {
   Phone, Mail, MapPin, Clock, ChevronRight, ShieldCheck, Award,
   HeartPulse, Send
@@ -58,6 +60,14 @@ const DIAGNOSTIC_LINKS = [
 ];
 
 const Footer = () => {
+  const [newsletterEmail, setNewsletterEmail] = useState('');
+  const newsletter = useSheetSubmit('newsletter', 'Footer newsletter');
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+    if (await newsletter.submit({ email: newsletterEmail })) setNewsletterEmail('');
+  };
+
   return (
     <footer style={{
       position: 'relative',
@@ -265,8 +275,10 @@ const Footer = () => {
 
           {/* Newsletter */}
           <form
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={subscribe}
+            noValidate
             style={{
+              position: 'relative',
               display: 'flex',
               background: 'rgba(255,255,255,.05)',
               border: '1px solid rgba(200,169,110,.22)',
@@ -274,9 +286,13 @@ const Footer = () => {
               padding: 4,
             }}
           >
+            <input {...newsletter.honeypotProps} />
             <input
               type="email"
-              placeholder="Email for health tips"
+              aria-label="Email for health tips"
+              value={newsletterEmail}
+              onChange={e => { setNewsletterEmail(e.target.value); if (newsletter.status !== 'sending') newsletter.reset(); }}
+              placeholder={newsletter.sent ? 'Subscribed — thank you!' : 'Email for health tips'}
               style={{
                 flex: 1, background: 'none', border: 'none', outline: 'none',
                 padding: '8px 14px', fontSize: 13, color: '#fff',
@@ -286,6 +302,7 @@ const Footer = () => {
             <button
               type="submit"
               aria-label="Subscribe"
+              disabled={newsletter.sending}
               style={{
                 background: 'linear-gradient(135deg,#c8a96e,#a8884a)',
                 border: 'none', borderRadius: 100,
@@ -297,6 +314,11 @@ const Footer = () => {
               <Send size={14} strokeWidth={2.5} />
             </button>
           </form>
+          {(newsletter.error || newsletter.sent) && (
+            <p role={newsletter.error ? 'alert' : 'status'} style={{ marginTop: 8, fontSize: 12.5, color: newsletter.error ? '#fca5a5' : '#c8a96e' }}>
+              {newsletter.error || 'Thanks! You are subscribed to our health tips.'}
+            </p>
+          )}
         </div>
       </div>
 

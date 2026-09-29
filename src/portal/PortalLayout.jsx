@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { isSignedIn, signOut } from './auth';
+import SEO from '../components/SEO';
 
 const menuItems = [
   { name: 'Dashboard', path: '/portal/dashboard', icon: LayoutDashboard },
@@ -122,6 +123,7 @@ const PortalLayout = ({ children }) => {
 
   return (
     <>
+      <SEO title="Doctor Portal" noIndex />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
         * { box-sizing: border-box; }

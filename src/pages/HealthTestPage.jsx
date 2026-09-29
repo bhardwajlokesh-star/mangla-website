@@ -7,7 +7,9 @@ import {
   CheckCircle2, Camera, FileImage, Trash2, Eye, Loader2
 } from 'lucide-react';
 import { submitHealthTest, makeReferenceId } from '../utils/submitHealthTest';
+import { normalisePhone, isValidEmail, SUBMIT_ERRORS } from '../utils/sheetClient';
 import { clinic } from '../config/clinic';
+import SEO from '../components/SEO';
 
 const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
 
@@ -24,18 +26,7 @@ const INITIAL_FORM = {
   website: '' // honeypot — must stay empty; bots fill it
 };
 
-// Accepts 10-digit Indian mobile numbers, with or without +91 / 0 and spaces.
-const normalisePhone = (raw) => {
-  const digits = String(raw).replace(/\D/g, '').replace(/^(91|0)(?=\d{10}$)/, '');
-  return /^[6-9]\d{9}$/.test(digits) ? digits : null;
-};
 
-const SUBMIT_ERRORS = {
-  'not-configured': `Online submissions are not available right now. Please call us on ${clinic.phone}.`,
-  'rate-limited': 'We have already received several assessments from this number. Our team will contact you shortly.',
-  'image-too-large': 'That photo is too large to send. Please choose a smaller image, or remove it and submit.',
-  default: `Could not submit right now. Please try again, or call us on ${clinic.phone}.`,
-};
 
 /* ─── Fonts + Styles ─── */
 const Styles = () => (
@@ -201,7 +192,7 @@ const HealthTestPage = () => {
     if (n === 1 && formData.name.trim().length < 2) return 'Please enter your full name.';
     if (n === 1 && formData.age && (Number(formData.age) < 1 || Number(formData.age) > 120)) return 'Please enter a valid age.';
     if (n === 2 && !normalisePhone(formData.phone)) return 'Please enter a valid 10-digit mobile number.';
-    if (n === 2 && formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) return 'Please check your email address, or leave it empty.';
+    if (n === 2 && formData.email && !isValidEmail(formData.email)) return 'Please check your email address, or leave it empty.';
     if (n === TOTAL && !formData.consent) return 'Please tick the consent box to submit.';
     return '';
   };
@@ -576,6 +567,7 @@ const HealthTestPage = () => {
     return (
       <>
         <Styles />
+        <SEO title="Free Health Test" description="Take Mangla Healthcare's free online health assessment. Share your symptoms and a doctor from our Jaipur team will call you within 24 hours." />
         <div className="ht-font-body" style={{ minHeight: '100vh', background: '#f7f3ed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -623,6 +615,7 @@ const HealthTestPage = () => {
   return (
     <>
       <Styles />
+      <SEO title="Free Health Test" description="Take Mangla Healthcare's free online health assessment. Share your symptoms and a doctor from our Jaipur team will call you within 24 hours." />
       <div className="ht-font-body" style={{ minHeight: '100vh', background: '#f7f3ed', padding: 'clamp(80px,12vw,128px) 16px 60px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
 

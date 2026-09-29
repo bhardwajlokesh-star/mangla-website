@@ -8,6 +8,7 @@ import {
   HeartPulse, Eye, Ear, Bone, Star, Calendar, Send
 } from 'lucide-react';
 import SEO from '../components/SEO';
+import { useSheetSubmit } from '../utils/useSheetSubmit';
 
 /* ──────────────────────────────────────────────────────────────
    PANCHAKARMA — PREMIUM DEDICATED PAGE
@@ -303,7 +304,8 @@ const PanchkarmaPage = () => {
   const [openFaq, setOpenFaq] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [form, setForm] = useState({ name: '', phone: '', email: '', interest: '', message: '' });
-  const [formSent, setFormSent] = useState(false);
+  const enquiry = useSheetSubmit('enquiry', 'Panchkarma — Appointment');
+  const formSent = enquiry.sent;
 
   /* auto-advance testimonials */
   useEffect(() => {
@@ -311,12 +313,12 @@ const PanchkarmaPage = () => {
     return () => clearInterval(id);
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.phone) return;
-    setFormSent(true);
-    setTimeout(() => setFormSent(false), 5000);
+    const ok = await enquiry.submit({ name: form.name, phone: form.phone, email: form.email, interest: form.interest, message: form.message });
+    if (!ok) return;
     setForm({ name: '', phone: '', email: '', interest: '', message: '' });
+    setTimeout(enquiry.reset, 6000);
   };
 
   const medicalSchema = {
@@ -1436,7 +1438,9 @@ const PanchkarmaPage = () => {
               initial={{ opacity: 0, x: 22 }} whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }} transition={{ delay: 0.1 }}
               onSubmit={handleSubmit}
+              noValidate
               style={{
+                position: 'relative',
                 background: 'linear-gradient(180deg, #FAF8F3, #DDE8E366)',
                 border: '1px solid rgba(30,91,79,.08)',
                 borderRadius: 22, padding: 'clamp(28px, 4vw, 40px)',
@@ -1463,6 +1467,12 @@ const PanchkarmaPage = () => {
                 >
                   <Check size={16} /> Thank you — we'll be in touch soon.
                 </motion.div>
+              )}
+              <input {...enquiry.honeypotProps} />
+              {enquiry.error && (
+                <p role="alert" style={{ padding: '10px 14px', borderRadius: 10, background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', fontSize: 13.5, fontWeight: 500, marginBottom: 18 }}>
+                  {enquiry.error}
+                </p>
               )}
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, marginBottom: 14 }}>
@@ -1502,8 +1512,8 @@ const PanchkarmaPage = () => {
                 value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
                 style={{ marginBottom: 20 }}
               />
-              <button type="submit" className="pk-btn-primary" style={{ width: '100%', justifyContent: 'center' }}>
-                <Send size={15} /> Submit Request
+              <button type="submit" className="pk-btn-primary" disabled={enquiry.sending} style={{ width: '100%', justifyContent: 'center', opacity: enquiry.sending ? 0.7 : 1 }}>
+                <Send size={15} /> {enquiry.sending ? 'Sending…' : 'Submit Request'}
               </button>
               <p style={{ fontSize: 12, color: '#2D2D2D77', marginTop: 14, textAlign: 'center' }}>
                 We respect your privacy. See our <Link to="/privacy" style={{ color: '#1E5B4F', fontWeight: 600 }}>Privacy Policy</Link>.

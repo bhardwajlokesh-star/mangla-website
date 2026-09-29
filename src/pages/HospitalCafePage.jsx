@@ -5,6 +5,7 @@ import {
   Plus, Minus, X, FlaskConical, Droplet, Wind, Zap, CheckCircle2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 /* ════════════════════════════════════════════════════════════
    HOSPITAL CAFE PAGE — AYURVEDIC WELLNESS NUTRITION
@@ -418,6 +419,10 @@ const HospitalCafePage = () => {
 
   return (
     <>
+      <SEO
+        title="Hospital Café"
+        description="Sattvic, Ayurveda-friendly meals and drinks at the Mangla Healthcare hospital café, prepared for patients and visitors."
+      />
       <div style={{ background: '#fff' }}>
         {/* ══ HERO ══ */}
         <section style={{ position: 'relative', overflow: 'hidden', background: '#07202f', minHeight: 480, display: 'flex', alignItems: 'center', paddingTop: 80 }}>

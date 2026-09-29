@@ -5,6 +5,7 @@ import {
   ArrowRight, Check
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import SEO from '../components/SEO';
 
 /* ─── Styles ─── */
 const Styles = () => (
@@ -152,6 +153,10 @@ const ServicesPage = () => {
   return (
     <>
       <Styles />
+      <SEO
+        title="Services"
+        description="OPD consultation, Panchkarma, pain management, diagnostics, nursing care and wellness programmes at Mangla Healthcare, Jaipur."
+      />
       <div className="sv-body" style={{ background: '#fff' }}>
 
         {/* ══ HERO ══ */}

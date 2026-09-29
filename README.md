@@ -4,8 +4,10 @@ Static website for Mangla Healthcare / Rogjeet Ayurveda (Jaipur), built with
 React 19, Vite and React Router. There is no backend. The only moving parts
 are:
 
-- **Free Health Test**: submissions go to the clinic's own Google Sheet
-  through a Google Apps Script (see [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md)).
+- **Website forms** (Free Health Test, appointment/contact requests,
+  newsletter) save into the clinic's own Google Sheet through a Google Apps
+  Script (see [APPS_SCRIPT_SETUP.md](APPS_SCRIPT_SETUP.md)). Until
+  `VITE_HEALTH_TEST_ENDPOINT` is set, every form tells visitors to call instead.
 - **Doctor Portal → Prescription**: builds a branded A4 prescription in the
   browser, then downloads it as a PDF or prints it. Nothing is stored.
 
@@ -28,7 +30,7 @@ npm run lint
 | --- | --- |
 | Clinic name, address, phone, website, OPD hours (prescription letterhead, 404 page, health test messages) | `src/config/clinic.js` |
 | Doctors (profiles, prescription doctor list, registration numbers) | `src/pages/doctorsData.js` |
-| Health Test Google Sheet URL | `VITE_HEALTH_TEST_ENDPOINT` in `.env.local` / host settings |
+| Google Sheet URL for all forms | `VITE_HEALTH_TEST_ENDPOINT` in `.env.local` / host settings |
 | Portal username and password | `VITE_PORTAL_USERNAME`, `VITE_PORTAL_PASSWORD_SHA256` (see `.env.example`) |
 | Google Analytics 4 | `VITE_GA_ID` (optional; nothing loads without it) |
 
@@ -57,7 +59,7 @@ src/
   components/             Navbar, Footer, SEO, cookie banner…
   pages/                  public pages; placeholderRoutes.js + content/subPages.js drive ~50 sub-pages
   portal/                 doctor portal (auth.js, Prescription.jsx, …)
-  utils/submitHealthTest.js
+  utils/                  sheetClient.js (send to Sheet), useSheetSubmit.js (form hook), submitHealthTest.js
 google-apps-script/Code.gs  paste into the Sheet's Apps Script editor
 scripts/generate-sitemap.js runs before every build
 public/img/               photos (WebP)

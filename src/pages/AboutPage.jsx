@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import SEO from '../components/SEO';
 import { Target, Eye, Award, Heart, ShieldCheck, Stethoscope, CheckCircle2, Users, Star, Leaf } from 'lucide-react';
 
 /* ─── Shared Styles ─── */
@@ -82,6 +83,10 @@ const AboutPage = () => {
   return (
     <>
       <Styles />
+      <SEO
+        title="About Us"
+        description="Mangla Healthcare and Rogjeet Ayurveda: an integrated Ayurveda hospital in Jaipur combining classical Panchkarma with modern diagnostics and experienced doctors."
+      />
       <div className="ab-body" style={{ background: '#fff' }}>
 
         {/* ══ HERO ══ */}

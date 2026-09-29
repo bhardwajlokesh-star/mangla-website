@@ -1,34 +1,14 @@
 /* ──────────────────────────────────────────────────────────────
-   Submit Free Health Test data to a Google Sheet via a
-   Google Apps Script Web App (see /google-apps-script/Code.gs).
-
-   Setup: see /APPS_SCRIPT_SETUP.md (root of project).
-
-   Configure via .env:
-     VITE_HEALTH_TEST_ENDPOINT = the /exec Web App URL
-     VITE_HEALTH_TEST_TOKEN    = optional shared value (must match
-                                 SHARED_TOKEN in Code.gs). It ships in
-                                 the public JavaScript, so it only
-                                 filters out casual junk, not attackers.
+   Free Health Test → "Health Tests" tab of the clinic's Google Sheet.
+   Transport, retries and configuration live in ./sheetClient.js.
    ────────────────────────────────────────────────────────────── */
 
-const SHEET_ENDPOINT = import.meta.env.VITE_HEALTH_TEST_ENDPOINT || '';
-const SHEET_TOKEN = import.meta.env.VITE_HEALTH_TEST_TOKEN || '';
+import { postToSheet, makeReferenceId } from './sheetClient';
+
+export { makeReferenceId };
 
 const MAX_IMAGE_DIMENSION = 1600;   // px, longest side after resizing
 const MAX_RAW_IMAGE_BYTES = 8 * 1024 * 1024; // fallback when the browser can't resize (e.g. HEIC)
-
-/* Short, human-friendly reference like HT-260930-4K7Q. Also used by the
-   Apps Script to ignore accidental duplicate submissions. */
-export function makeReferenceId(date = new Date()) {
-  const ist = new Date(date.getTime() + 5.5 * 3600 * 1000);
-  const ymd = ist.toISOString().slice(2, 10).replace(/-/g, '');
-  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let rand = '';
-  const bytes = crypto.getRandomValues(new Uint8Array(4));
-  for (const b of bytes) rand += alphabet[b % alphabet.length];
-  return `HT-${ymd}-${rand}`;
-}
 
 /* Downscale a photo to a JPEG so uploads stay small on mobile data.
    Returns { base64, mimeType } or null if the browser can't decode it. */
@@ -75,13 +55,8 @@ async function prepareImage(file) {
  * @returns {Promise<{ok: true, referenceId: string} | {ok: false, reason: string}>}
  */
 export async function submitHealthTest(formData) {
-  if (!SHEET_ENDPOINT) {
-    console.error('[submitHealthTest] VITE_HEALTH_TEST_ENDPOINT is not set.');
-    return { ok: false, reason: 'not-configured' };
-  }
-
   const now = new Date();
-  const referenceId = formData.referenceId || makeReferenceId(now);
+  const referenceId = formData.referenceId || makeReferenceId('HT', now);
 
   let image;
   try {
@@ -90,8 +65,8 @@ export async function submitHealthTest(formData) {
     return { ok: false, reason: 'image-too-large' };
   }
 
-  const payload = {
-    token:         SHEET_TOKEN,
+  const res = await postToSheet({
+    kind:          'health-test',
     website:       formData.website || '',   // honeypot — humans leave this empty
     referenceId,
     timestamp:     now.toISOString(),
@@ -108,39 +83,6 @@ export async function submitHealthTest(formData) {
     consent:       formData.consent ? 'Yes' : 'No',
     imageName:     formData.imageName || '',
     ...image,
-    source:        typeof window !== 'undefined' ? window.location.href : '',
-    userAgent:     typeof navigator !== 'undefined' ? navigator.userAgent : '',
-  };
-  const body = JSON.stringify(payload);
-
-  // Apps Script replies with CORS headers for "simple" text/plain POSTs, so we
-  // can normally read its { ok } answer.
-  try {
-    const res = await fetch(SHEET_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body,
-    });
-    const data = await res.json();
-    if (data && data.ok) return { ok: true, referenceId };
-    console.error('[submitHealthTest] rejected:', data && data.error);
-    return { ok: false, reason: data && data.error === 'rate-limited' ? 'rate-limited' : 'rejected' };
-  } catch (err) {
-    // The response couldn't be read (some browsers/extensions block it).
-    // Resend without reading the reply; the script ignores a repeated
-    // referenceId, so this can never create a duplicate row.
-    console.warn('[submitHealthTest] response unreadable, retrying blind:', err);
-    try {
-      await fetch(SHEET_ENDPOINT, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body,
-      });
-      return { ok: true, referenceId };
-    } catch (err2) {
-      console.error('[submitHealthTest] failed:', err2);
-      return { ok: false, reason: 'network' };
-    }
-  }
+  });
+  return res.ok ? { ok: true, referenceId } : res;
 }

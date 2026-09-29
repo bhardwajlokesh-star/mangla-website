@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Phone, Mail, MapPin, Send, Clock, CheckCircle2, ChevronDown, MessageSquare, User, Loader } from 'lucide-react';
+import SEO from '../components/SEO';
+import { useSheetSubmit } from '../utils/useSheetSubmit';
+import { normalisePhone } from '../utils/sheetClient';
 
 /* ─── Styles ─── */
 const Styles = () => (
@@ -81,8 +84,9 @@ const infoItems = [
 /* ════════════════════════════════════════════════ */
 const ContactPage = () => {
   const [form, setForm] = useState({ name: '', phone: '', email: '', reason: '', message: '' });
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
+  const enquiry = useSheetSubmit('enquiry', 'Contact Page');
+  const loading = enquiry.sending;
+  const sent = enquiry.sent;
   const [errors, setErrors] = useState({});
 
   const update = (k, v) => { setForm(p => ({ ...p, [k]: v })); setErrors(p => ({ ...p, [k]: '' })); };
@@ -90,22 +94,25 @@ const ContactPage = () => {
   const validate = () => {
     const e = {};
     if (!form.name.trim()) e.name = 'Name is required';
-    if (!form.phone.trim() || form.phone.replace(/\D/g, '').length < 10) e.phone = 'Valid phone number required';
+    if (!normalisePhone(form.phone)) e.phone = 'Valid 10-digit mobile number required';
     if (!form.message.trim()) e.message = 'Please write a message';
     setErrors(e);
     return Object.keys(e).length === 0;
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
-    setLoading(true);
-    setTimeout(() => { setLoading(false); setSent(true); }, 1800);
+    await enquiry.submit({ name: form.name, phone: form.phone, email: form.email, interest: form.reason, message: form.message });
   };
 
   return (
     <>
       <Styles />
+      <SEO
+        title="Contact Us"
+        description="Call, WhatsApp or message Mangla Healthcare, Medical Square, Jaipur. OPD Mon–Sat 9 AM–8 PM; emergency care 24×7."
+      />
       <div className="ct-body" style={{ background: '#fff' }}>
 
         {/* ══ HERO ══ */}
@@ -187,7 +194,7 @@ const ContactPage = () => {
                         Thank you, <strong>{form.name}</strong>. We've received your message and will get back to you on <strong style={{ color: '#0d7f78' }}>{form.phone}</strong> within 24 hours.
                       </p>
                       <button
-                        onClick={() => { setSent(false); setForm({ name: '', phone: '', email: '', reason: '', message: '' }); }}
+                        onClick={() => { enquiry.reset(); setForm({ name: '', phone: '', email: '', reason: '', message: '' }); }}
                         style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#f7f3ed', border: 'none', borderRadius: 12, padding: '12px 24px', cursor: 'pointer', fontFamily: "'Space Grotesk',sans-serif", fontWeight: 600, color: '#07202f', fontSize: 15, transition: 'background .2s' }}
                         onMouseEnter={e => e.currentTarget.style.background = '#e8f4f3'}
                         onMouseLeave={e => e.currentTarget.style.background = '#f7f3ed'}
@@ -197,7 +204,8 @@ const ContactPage = () => {
                     </motion.div>
                   ) : (
                     /* ── Form ── */
-                    <motion.form key="form" onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }} noValidate>
+                    <motion.form key="form" onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 20, position: 'relative' }} noValidate>
+                      <input {...enquiry.honeypotProps} />
                       <div>
                         <h3 className="ct-display" style={{ fontSize: 30, color: '#07202f', fontWeight: 700, marginBottom: 6 }}>Send Us a Message</h3>
                         <p style={{ color: '#94a3b8', fontSize: 15 }}>We typically respond within 24 hours.</p>
@@ -264,6 +272,12 @@ const ContactPage = () => {
                         {errors.message && <p style={{ color: '#ef4444', fontSize: 12, marginTop: 5 }}>{errors.message}</p>}
                       </div>
 
+                      {enquiry.error && (
+                        <p role="alert" style={{ padding: '10px 14px', borderRadius: 10, background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', fontSize: 13.5, fontWeight: 500, margin: 0 }}>
+                          {enquiry.error}
+                        </p>
+                      )}
+
                       <button type="submit" className="ct-submit" disabled={loading}>
                         {loading ? (
                           <><Loader size={18} style={{ animation: 'spin 1s linear infinite' }} /> Sending…</>
@@ -273,7 +287,7 @@ const ContactPage = () => {
                       </button>
 
                       <p style={{ fontSize: 12.5, color: '#94a3b8', textAlign: 'center', lineHeight: 1.5 }}>
-                        Your data is encrypted and never shared with third parties.
+                        Your details are sent securely and never shared with third parties.
                       </p>
                     </motion.form>
                   )}

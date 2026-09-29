@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SEO from '../components/SEO';
+import { useSheetSubmit } from '../utils/useSheetSubmit';
 import { organizationSchema } from '../components/seoSchemas';
 import AccreditationStrip from '../components/AccreditationStrip';
 
@@ -178,7 +179,7 @@ const faqs = [
 const HomePage = () => {
     const [slide, setSlide] = useState(0);
     const [bookingForm, setBookingForm] = useState({ name: '', phone: '', consultation: '' });
-    const [bookingSent, setBookingSent] = useState(false);
+    const enquiry = useSheetSubmit('enquiry', 'Home — Book Consultation');
     const heroRef = useRef(null);
     const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
     const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '28%']);
@@ -189,11 +190,12 @@ const HomePage = () => {
         return () => clearInterval(timer);
     }, []);
 
-    const handleBook = (e) => {
+    const handleBook = async (e) => {
         e.preventDefault();
-        setBookingSent(true);
-        setTimeout(() => setBookingSent(false), 4000);
+        const ok = await enquiry.submit({ name: bookingForm.name, phone: bookingForm.phone, interest: 'Book consultation — call back' });
+        if (!ok) return;
         setBookingForm({ name: '', phone: '', consultation: '' });
+        setTimeout(enquiry.reset, 6000);
     };
 
     return (
@@ -283,7 +285,7 @@ const HomePage = () => {
                                         <p style={{ color: 'rgba(255,255,255,.8)', fontSize: 12, marginTop: 4 }}>Get a call from our health coach in 5–10 mins</p>
                                     </div>
 
-                                    {bookingSent ? (
+                                    {enquiry.sent ? (
                                         <div style={{ textAlign: 'center', padding: '28px 0' }}>
                                             <div style={{ width: 60, height: 60, borderRadius: '50%', background: '#e8f4f3', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 12px' }}>
                                                 <CheckCircle2 size={30} color="#0d7f78" />
@@ -292,14 +294,15 @@ const HomePage = () => {
                                             <p style={{ fontSize: 13, color: '#64748b' }}>Our health coach will call you shortly.</p>
                                         </div>
                                     ) : (
-                                        <form onSubmit={handleBook} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                                        <form onSubmit={handleBook} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 12, position: 'relative' }}>
+                                            <input {...enquiry.honeypotProps} />
                                             <input required value={bookingForm.name} onChange={e => setBookingForm({ ...bookingForm, name: e.target.value })}
                                                 placeholder="Patient Name"
                                                 style={{ padding: '13px 16px', borderRadius: 10, border: '1.5px solid #e2e8f0', background: '#f8fafc', fontSize: 14, fontFamily: "'DM Sans',sans-serif", outline: 'none' }} />
                                             <div style={{ display: 'flex', gap: 0 }}>
                                                 <span style={{ padding: '13px 14px', background: '#f1f5f9', border: '1.5px solid #e2e8f0', borderRight: 'none', borderRadius: '10px 0 0 10px', fontSize: 14, fontWeight: 700, color: '#475569' }}>+91</span>
                                                 <input required value={bookingForm.phone} onChange={e => setBookingForm({ ...bookingForm, phone: e.target.value })}
-                                                    placeholder="Mobile Number" type="tel"
+                                                    placeholder="Mobile Number" type="tel" inputMode="numeric" autoComplete="tel-national"
                                                     style={{ flex: 1, padding: '13px 16px', borderRadius: '0 10px 10px 0', border: '1.5px solid #e2e8f0', background: '#f8fafc', fontSize: 14, fontFamily: "'DM Sans',sans-serif", outline: 'none' }} />
                                             </div>
 
@@ -312,8 +315,13 @@ const HomePage = () => {
                                                 ))}
                                             </div>
 
-                                            <button type="submit" style={{ padding: '14px', borderRadius: 10, border: 'none', cursor: 'pointer', background: '#B84C2B', color: '#fff', fontSize: 15, fontWeight: 700, fontFamily: "'DM Sans',sans-serif", boxShadow: '0 6px 20px rgba(184,76,43,.35)' }}>
-                                                Book Now
+                                            {enquiry.error && (
+                                              <p role="alert" style={{ padding: '10px 14px', borderRadius: 10, background: '#fef2f2', border: '1px solid #fecaca', color: '#b91c1c', fontSize: 13.5, fontWeight: 500, margin: 0 }}>
+                                                {enquiry.error}
+                                              </p>
+                                            )}
+                                            <button type="submit" disabled={enquiry.sending} style={{ opacity: enquiry.sending ? 0.7 : 1, padding: '14px', borderRadius: 10, border: 'none', cursor: enquiry.sending ? 'wait' : 'pointer', background: '#B84C2B', color: '#fff', fontSize: 15, fontWeight: 700, fontFamily: "'DM Sans',sans-serif", boxShadow: '0 6px 20px rgba(184,76,43,.35)' }}>
+                                                {enquiry.sending ? 'Sending…' : 'Book Now'}
                                             </button>
                                         </form>
                                     )}
