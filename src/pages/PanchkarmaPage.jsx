@@ -600,7 +600,7 @@ const PanchkarmaPage = () => {
 
       {/* Sticky in-page nav */}
       <nav className="pk-subnav" aria-label="Page sections">
-        <div className="pk-subnav-inner">
+        <div className="pk-subnav-inner dock-clear">
           <a href="#what-is">What is Panchakarma</a>
           <a href="#process">Process</a>
           <a href="#therapies">Therapies</a>
@@ -766,7 +766,7 @@ const PanchkarmaPage = () => {
 
           <div className="pk-therapy-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 22,
           }}>
             {THERAPIES.map((t, i) => {
@@ -1228,7 +1228,7 @@ const PanchkarmaPage = () => {
           {/* All testimonials grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 18,
           }}>
             {TESTIMONIALS.map((t, i) => (

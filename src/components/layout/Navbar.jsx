@@ -342,8 +342,11 @@ const Navbar = () => {
         @media (min-width: 1281px) { .mobile-only  { display: none !important; } }
 
         /* top-bar contact text hides under 720, socials stay */
+        .tb-hours-short { display: none; }
         @media (max-width: 720px) {
           .tb-contact-extras { display: none !important; }
+          .tb-hours-full { display: none !important; }
+          .tb-hours-short { display: inline; }
           .tb-center-logo { display: none !important; }
           .tb-wrap { grid-template-columns: 1fr auto !important; gap: 10px !important; padding: 8px 14px !important; }
         }
@@ -428,8 +431,9 @@ const Navbar = () => {
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, justifyContent: 'flex-end', flexWrap: 'wrap' }}>
               <span className="tb-link">
                 <Clock size={13} style={{ color: '#c8a96e' }} />
-                <strong style={{ color: '#fff', fontWeight: 600 }}>Open Hours:</strong>
+                <strong className="tb-hours-full" style={{ color: '#fff', fontWeight: 600 }}>Open Hours:</strong>
                 <span className="tb-contact-extras">Mon – Sat · 9:00 AM – 8:00 PM · Sun Closed</span>
+                <strong className="tb-hours-short" style={{ color: '#fff', fontWeight: 600 }}>Mon–Sat · 9 AM–8 PM</strong>
               </span>
             </div>
           </div>

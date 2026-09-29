@@ -138,7 +138,7 @@ const AboutPage = () => {
               <div className="ab-divider" style={{ marginTop: 16 }} />
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px,1fr))', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 24 }}>
               {brands.map(({ name, Icon, color, bg, desc, img }, i) => (
                 <motion.div
                   key={i}
@@ -182,7 +182,7 @@ const AboutPage = () => {
               <div className="ab-divider" style={{ margin: '16px auto 0' }} />
             </motion.div>
 
-            <div className="ab-doctor-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 32, maxWidth: 920, margin: '0 auto' }}>
+            <div className="ab-doctor-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 32, maxWidth: 920, margin: '0 auto' }}>
               {doctors.map((doc, i) => (
                 <motion.div
                   key={i}
@@ -291,7 +291,7 @@ const AboutPage = () => {
               <span className="ab-pill" style={{ background: 'rgba(200,169,110,0.15)', color: '#c8a96e', border: '1px solid rgba(200,169,110,0.25)' }}>What Drives Us</span>
               <h2 className="ab-display" style={{ fontSize: 'clamp(2rem,4vw,3rem)', color: '#fff', fontWeight: 700 }}>Our Core Values</h2>
             </motion.div>
-            <div className="ab-values-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 20 }}>
+            <div className="ab-values-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 20 }}>
               {values.map(({ Icon, label, desc }, i) => (
                 <motion.div
                   key={i}

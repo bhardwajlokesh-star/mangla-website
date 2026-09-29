@@ -568,7 +568,7 @@ const HealthTestPage = () => {
       <>
         <Styles />
         <SEO title="Free Health Test" description="Take Mangla Healthcare's free online health assessment. Share your symptoms and a doctor from our Jaipur team will call you within 24 hours." />
-        <div className="ht-font-body" style={{ minHeight: '100vh', background: '#f7f3ed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+        <div className="ht-font-body dock-clear" style={{ minHeight: '100vh', background: '#f7f3ed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -616,7 +616,7 @@ const HealthTestPage = () => {
     <>
       <Styles />
       <SEO title="Free Health Test" description="Take Mangla Healthcare's free online health assessment. Share your symptoms and a doctor from our Jaipur team will call you within 24 hours." />
-      <div className="ht-font-body" style={{ minHeight: '100vh', background: '#f7f3ed', padding: 'clamp(80px,12vw,128px) 16px 60px' }}>
+      <div className="ht-font-body dock-clear" style={{ minHeight: '100vh', background: '#f7f3ed', padding: 'clamp(80px,12vw,128px) 16px 60px' }}>
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
 
           {/* ── Header ── */}

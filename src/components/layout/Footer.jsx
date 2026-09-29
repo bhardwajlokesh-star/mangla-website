@@ -115,7 +115,10 @@ const Footer = () => {
           .ft-main-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
         }
         @media (max-width: 640px) {
-          .ft-main-grid { grid-template-columns: 1fr; gap: 28px; }
+          .ft-main-grid { grid-template-columns: 1fr; gap: 28px; padding-left: 46px !important; }
+        }
+        @media (max-width: 360px) {
+          .ft-main-grid { padding-left: 42px !important; }
         }
       `}</style>
 
@@ -132,7 +135,7 @@ const Footer = () => {
         <div style={{
           maxWidth: 1280, margin: '0 auto',
           padding: '28px 20px',
-          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))',
           gap: 24,
         }}>
           {[

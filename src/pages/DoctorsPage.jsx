@@ -87,7 +87,7 @@ const DoctorsPage = () => (
     <section style={{ maxWidth: 1200, margin: '0 auto', padding: '72px 20px 96px' }}>
       <div className="dr-grid" style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))',
         gap: 24,
       }}>
         {doctors.map((d, i) => (

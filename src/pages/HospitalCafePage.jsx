@@ -508,7 +508,7 @@ const HospitalCafePage = () => {
               </p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 28 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 28 }}>
               {HEALTH_BENEFITS.map((benefit, i) => {
                 const Icon = benefit.icon;
                 return (
@@ -587,7 +587,7 @@ const HospitalCafePage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
-                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: 24 }}
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(340px, 100%), 1fr))', gap: 24 }}
               >
                 {currentItems.map((item, i) => (
                   <motion.div
@@ -667,7 +667,7 @@ const HospitalCafePage = () => {
               <p style={{ fontSize: 16, color: '#64748b', marginTop: 12 }}>Combining Ayurvedic wisdom with culinary mastery</p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 32 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(320px, 100%), 1fr))', gap: 32 }}>
               {CHEF_PROFILES.map((chef, i) => (
                 <motion.div
                   key={i}
@@ -704,7 +704,7 @@ const HospitalCafePage = () => {
               <p style={{ fontSize: 16, color: '#64748b', marginTop: 12 }}>How therapeutic nutrition has transformed their healing journeys</p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(300px, 100%), 1fr))', gap: 24 }}>
               {PATIENT_TESTIMONIALS.map((testimonial, i) => (
                 <motion.div
                   key={i}
@@ -743,7 +743,7 @@ const HospitalCafePage = () => {
               <p style={{ fontSize: 16, color: '#64748b', marginTop: 12 }}>Simple, delicious, therapeutic nutrition delivered to you</p>
             </motion.div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 24 }}>
               {[
                 { icon: ShoppingCart, title: 'Browse Menu', desc: 'Select from 25+ therapeutic meals organized by meal time' },
                 { icon: Clock, title: 'Choose Time', desc: 'Pick your preferred delivery time: breakfast, lunch, or dinner' },

@@ -257,7 +257,7 @@ const DoctorProfilePage = () => {
             <h2 className="dp-display" style={{ fontSize: 28, fontWeight: 700, color: '#0f1e2c', marginBottom: 22, letterSpacing: '-.4px' }}>
               Meet the rest of the team
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 18 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 18 }}>
               {others.map(o => (
                 <Link key={o.slug} to={`/doctors/${o.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                   <div style={{

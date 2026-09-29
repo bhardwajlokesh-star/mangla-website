@@ -12,6 +12,10 @@ export const clinic = {
   phoneHref: 'tel:+919992654891',
   emergencyPhone: '+91 99926 54891',
   email: 'care@manglahealthcare.com',
+  privacyEmail: 'privacy@manglahealthcare.com',
+  // Shown in the Privacy Policy as the person who handles data requests
+  // and complaints (required under India's DPDP Act, 2023).
+  grievanceOfficer: 'Grievance Officer, Mangla Healthcare',
   website: 'www.manglahealthcare.com',
   opdHours: 'OPD: Mon–Sat | 9AM–2PM, 5PM–8PM',
 };

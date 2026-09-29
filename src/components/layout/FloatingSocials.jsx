@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 /* ──────────────────────────────────────────────────────────────
    MANGLA HEALTHCARE — Floating social dock (fixed, left edge)
    Always visible, gentle hover lift, brand-coloured on hover.
-   Hidden on routes inside the portal and on phones (<640px).
+   Hidden inside the portal; compact on phones (index.css pads <main>
+   sections on the left so the dock never covers content).
    ────────────────────────────────────────────────────────────── */
 
 const IconWA = (p) => (

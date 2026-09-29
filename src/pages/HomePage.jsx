@@ -339,7 +339,7 @@ const HomePage = () => {
                     </div>
                     {[{ Icon: ChevronLeft, fn: () => setSlide(p => p === 0 ? slides.length - 1 : p - 1), side: { left: 16 } },
                     { Icon: ChevronRight, fn: () => setSlide(p => (p + 1) % slides.length), side: { right: 16 } }].map(({ Icon, fn, side }, i) => (
-                        <button key={i} onClick={fn} style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', ...side, zIndex: 20, width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,.12)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.2)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <button key={i} onClick={fn} className={i === 0 ? 'hero-arrow-prev' : undefined} aria-label={i === 0 ? 'Previous slide' : 'Next slide'} style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)', ...side, zIndex: 20, width: 44, height: 44, borderRadius: '50%', background: 'rgba(255,255,255,.12)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,.2)', color: '#fff', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             <Icon size={20} />
                         </button>
                     ))}
@@ -507,7 +507,7 @@ const HomePage = () => {
                                 Thousands of patients have transformed their health through our evidence-based Ayurvedic care. Here are their stories.
                             </p>
                         </motion.div>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 24 }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))', gap: 24 }}>
                             {testimonials.map((t, i) => (
                                 <motion.div key={i} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                                     style={{ background: '#fff', borderRadius: 18, padding: 28, boxShadow: '0 4px 20px rgba(7,32,47,.06)', border: '1px solid rgba(200,169,110,.08)', transition: 'all .3s', cursor: 'default' }}
@@ -574,7 +574,7 @@ const HomePage = () => {
                 </section>
 
                 {/* ══ STICKY MOBILE BOTTOM BAR ══ */}
-                <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 60, display: 'flex', background: 'transparent', pointerEvents: 'none' }}>
+                <div className="home-mobile-bar" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 60, background: 'transparent', pointerEvents: 'none' }}>
                     <Link to="/contact" style={{ flex: 1, padding: '16px', background: '#B84C2B', color: '#fff', fontSize: 14, fontWeight: 700, textAlign: 'center', textDecoration: 'none', pointerEvents: 'all', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
                         <Calendar size={16} /> Book Free Consultation
                     </Link>
@@ -582,8 +582,6 @@ const HomePage = () => {
                         <Phone size={16} /> Call Us
                     </a>
                 </div>
-
-                <div style={{ height: 60 }} />
 
             </div>
         </>

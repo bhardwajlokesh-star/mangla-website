@@ -618,7 +618,7 @@ const SuperSpecialityPage = () => {
 
       {/* Sticky sub-nav */}
       <nav className="ss-subnav" aria-label="Page sections">
-        <div className="ss-subnav-inner">
+        <div className="ss-subnav-inner dock-clear">
           <a href="#intro">Introduction</a>
           <a href="#specialities">Specialities</a>
           <a href="#detailed">In Detail</a>
@@ -721,7 +721,7 @@ const SuperSpecialityPage = () => {
 
           <div className="ss-spec-grid" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 22,
           }}>
             {SPECIALITIES.map((s, i) => {
@@ -913,7 +913,7 @@ const SuperSpecialityPage = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 22,
           }}>
             {WHY_CHOOSE.map((w, i) => {
@@ -1150,7 +1150,7 @@ const SuperSpecialityPage = () => {
 
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 18,
           }}>
             {TESTIMONIALS.map((t, i) => (

@@ -476,7 +476,7 @@ const RichPage = ({ content = {} }) => {
           </div>
           <div className="rp-grid-3" style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
             gap: 18,
           }}>
             {benefits.map((b, i) => {
@@ -691,7 +691,7 @@ const RichPage = ({ content = {} }) => {
             </div>
             <div className="rp-grid-3" style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(min(280px, 100%), 1fr))',
               gap: 18,
             }}>
               {related.map((r, i) => {

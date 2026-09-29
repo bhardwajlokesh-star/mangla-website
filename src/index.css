@@ -9,8 +9,10 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
+  /* The site has one (light) design; don't let phones in dark mode restyle
+     native controls such as dropdown menus and scrollbars. */
+  color-scheme: light;
+  color: #1a1a1a;
   background-color: #ffffff;
 
   font-synthesis: none;
@@ -27,6 +29,20 @@ body {
   background-color: #f8fafc;
 }
 
+/* iPhones zoom the whole page when a form field's text is under 16px and
+   stay zoomed after typing. Keep every field at 16px on phone-sized screens. */
+@media (max-width: 767px) {
+  input, select, textarea { font-size: 16px !important; }
+}
+
+/* Home page "Book / Call" bar: phones only. While it is showing, leave room
+   at the bottom of the page so it never hides the end of the footer. */
+.home-mobile-bar { display: none; }
+@media (max-width: 767px) {
+  .home-mobile-bar { display: flex; }
+  body:has(.home-mobile-bar) { padding-bottom: 76px; }
+}
+
 @layer base {
   h1, h2, h3, h4, h5, h6 {
     @apply font-bold text-slate-900;
@@ -37,11 +53,14 @@ body {
    Floating left dock — give every page section enough left
    clearance so the dock never sits on top of body text/images.
    Scoped to <main> so navbar/footer (full-bleed by design) are
-   unaffected.
+   unaffected. Content that isn't inside a <section> can opt in with
+   className="dock-clear".
    ────────────────────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  main section { padding-left: 46px !important; }
+  main section, main .dock-clear { padding-left: 46px !important; }
+  /* Absolutely positioned controls can't be padded; move them past the dock. */
+  main .hero-arrow-prev { left: 52px !important; }
 }
 @media (max-width: 360px) {
-  main section { padding-left: 42px !important; }
+  main section, main .dock-clear { padding-left: 42px !important; }
 }
